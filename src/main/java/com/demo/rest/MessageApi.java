@@ -22,9 +22,16 @@ public class MessageApi {
     }
 
     @POST
-    @Path("/send")
-    public String send(@FormParam("msg") String message) throws Exception {
+    @Path("/sendlocal")
+    public String sendLocal(@FormParam("msg") String message) throws Exception {
         // 1件メッセージ送信
-        return producer.sendMessage(message);
+        return producer.sendLocalMessage(message);
     }
+    @POST
+    @Path("/sendremote")
+    public String sendRemote(@FormParam("msg") String message) throws Exception {
+        // 1件メッセージ送信
+        return producer.sendRemoteMessage(message);
+    }
+
 }

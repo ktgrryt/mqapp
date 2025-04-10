@@ -5,8 +5,14 @@
     <title>Send Message</title>
 </head>
 <body>
-    <h1>メッセージ送信</h1>
-    <form action="/mqapp/api/send" method="post">
+    <h1>ローカルキュー（DEV.QUEUE.1）にメッセージ送信</h1>
+    <form action="/mqapp/api/sendlocal" method="post">
+        <label for="msg">メッセージ:</label>
+        <input type="text" id="msg" name="msg" required>
+        <button type="submit">送信</button>
+    </form>
+    <h1>リモートキュー（REMOTE.Q.1）にメッセージ送信</h1>
+    <form action="/mqapp/api/sendremote" method="post">
         <label for="msg">メッセージ:</label>
         <input type="text" id="msg" name="msg" required>
         <button type="submit">送信</button>

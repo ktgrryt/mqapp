@@ -20,7 +20,7 @@ public class MQProducer {
     @Resource(lookup = "jms/remote1")
     Queue remoteQueue;
 
-    public String sendMessage(String message) throws Exception {
+    public String sendLocalMessage(String message) throws Exception {
       context.createProducer().send(queue, message);
       return message + " enqueued.";
     }
