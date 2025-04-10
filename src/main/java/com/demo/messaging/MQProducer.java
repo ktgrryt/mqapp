@@ -21,13 +21,20 @@ public class MQProducer {
     Queue remoteQueue;
 
     public String sendLocalMessage(String message) throws Exception {
-      context.createProducer().send(queue, message);
-      return message + " enqueued.";
+        try {
+            context.createProducer().send(queue, message);
+            return message + " enqueued.";
+        } catch (Exception e) {
+            throw new Exception("ローカルキューへの送信に失敗しました: " + e.getMessage(), e);
+        }
     }
 
     public String sendRemoteMessage(String message) throws Exception {
-      context.createProducer().send(remoteQueue, message);
-      return message + " remote enqueued.";
+        try {
+            context.createProducer().send(remoteQueue, message);
+            return message + " remote enqueued.";
+        } catch (Exception e) {
+            throw new Exception("リモートキューへの送信に失敗しました: " + e.getMessage(), e);
+        }
     }
-
 }

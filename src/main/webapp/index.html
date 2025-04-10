@@ -2,7 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Send Message</title>
+    <title>Send and Receive Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #444;
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>ローカルキュー（DEV.QUEUE.1）にメッセージ送信</h1>
@@ -11,11 +60,17 @@
         <input type="text" id="msg" name="msg" required>
         <button type="submit">送信</button>
     </form>
+
     <h1>リモートキュー（REMOTE.Q.1）にメッセージ送信</h1>
     <form action="/mqapp/api/sendremote" method="post">
         <label for="msg">メッセージ:</label>
         <input type="text" id="msg" name="msg" required>
         <button type="submit">送信</button>
+    </form>
+
+    <h1>ローカルキュー（DEV.QUEUE.1）からメッセージ受信</h1>
+    <form action="/mqapp/api/recv" method="get">
+        <button type="submit">受信</button>
     </form>
 </body>
 </html>
