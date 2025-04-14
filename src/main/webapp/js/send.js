@@ -31,13 +31,18 @@ function sendMessage() {
         },
         body: new URLSearchParams({ msg: message })
     })
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+        }
+        return response.text();
+    })
     .then(data => {
-        // 送信結果を履歴に追加 (色付き表示)
+        // 送信結果を履歴に追加 (青色表示)
         addMessageToHistory("送信: " + data, 'response');
     })
     .catch(error => {
-        // エラー表示も色付きにして区別可能に
-        addMessageToHistory("送信エラー: " + error.message, 'response');
+        // エラー表示を赤色に
+        addMessageToHistory("送信エラー: " + error.message, 'error');
     });
 }

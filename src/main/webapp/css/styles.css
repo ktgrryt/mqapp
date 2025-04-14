@@ -104,7 +104,6 @@ button:active {
     line-height: 1.4; /* 行間を広げる */
 }
 
-css
 .message-request {
     color: #888; /* グレー表示 */
     background-color: #f5f5f5; /* 薄い背景色 */
@@ -118,9 +117,9 @@ css
 }
 
 .message-error {
-    color: #D8000C; /* 赤色で強調 */
-    background-color: #FFD2D2; /* 薄い赤の背景色 */
-    border-left: 4px solid #D8000C; /* 左にアクセントライン */
+    color: #ff0000; /* 赤色の文字 */
+    background-color: #ffe6e6; /* 薄い赤色の背景 */
+    border-left: 4px solid #ff0000; /* 左に赤色のアクセントライン */
 }
 
 

@@ -17,13 +17,18 @@ function receiveMessage() {
     addMessageToHistory("メッセージの受信処理を開始しました", 'request');
 
     fetch(queueEndpoint)
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+        }
+        return response.text();
+    })
     .then(data => {
-        // 受信結果を履歴に追加 (色付き表示)
+        // 受信結果を履歴に追加 (青色表示)
         addMessageToHistory("受信: " + data, 'response');
     })
     .catch(error => {
-        // エラー表示も色付きにして区別可能に
-        addMessageToHistory("受信エラー: " + error.message, 'response');
+        // エラー表示を赤色に
+        addMessageToHistory("受信エラー: " + error.message, 'error');
     });
 }

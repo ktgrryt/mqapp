@@ -9,6 +9,7 @@ const historyHTML = `
     </div>
 `;
 
+
 function addMessageToHistory(message, type = 'default') {
     const messagesDiv = document.getElementById('messages-list');
     const newMessageDiv = document.createElement('div');
@@ -19,6 +20,8 @@ function addMessageToHistory(message, type = 'default') {
         newMessageDiv.classList.add('message-request');
     } else if (type === 'response') {
         newMessageDiv.classList.add('message-response');
+    } else if (type === 'error') {
+        newMessageDiv.classList.add('message-error'); // エラー用のクラス
     }
     
     newMessageDiv.textContent = message;
