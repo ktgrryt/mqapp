@@ -27,7 +27,7 @@ function sendMessage() {
     fetch(queueEndpoint, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         },
         body: new URLSearchParams({ msg: message })
     })

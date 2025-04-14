@@ -102,6 +102,15 @@ button:active {
     font-size: 0.95rem; /* フォントサイズを調整 */
     color: #555;
     line-height: 1.4; /* 行間を広げる */
+    position: relative; /* タイムスタンプを絶対位置で配置するために必要 */
+}
+
+.timestamp {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 12px;
+    color: #999;
 }
 
 .message-request {
