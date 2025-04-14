@@ -40,6 +40,8 @@ function sendMessage() {
     .then(data => {
         // 送信結果を履歴に追加 (青色表示)
         addMessageToHistory("送信: " + data, 'response');
+        // メッセージ入力フォームをクリア
+        messageInput.value = '';
     })
     .catch(error => {
         // エラー表示を赤色に
