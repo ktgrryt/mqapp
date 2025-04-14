@@ -3,148 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Send and Receive Message</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            color: #444;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .forms-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin: 20px auto;
-            padding: 20px;
-            width: 90%;
-        }
-        form {
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 30%;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input[type="text"] {
-            width: 95%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #messages {
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 87%;
-        }
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f1f1f1;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>MQによるキューの送受信</h1>
+
     <div class="forms-container">
-        <form id="sendLocalForm">
-            <h3>ローカルキュー（DEV.QUEUE.1）にメッセージ送信</h3>
-            <label for="localMsg">メッセージ:</label>
-            <input type="text" id="localMsg" name="msg" required>
-            <button type="button" onclick="sendMessage('/mqapp/api/sendlocal', 'localMsg')">送信</button>
-        </form>
-
-        <form id="sendRemoteForm">
-            <h3>リモートキュー（REMOTE.Q.1）にメッセージ送信</h3>
-            <label for="remoteMsg">メッセージ:</label>
-            <input type="text" id="remoteMsg" name="msg" required>
-            <button type="button" onclick="sendMessage('/mqapp/api/sendremote', 'remoteMsg')">送信</button>
-        </form>
-
-        <form id="recvForm">
-            <h3>ローカルキュー（DEV.QUEUE.1）からメッセージ受信</h3>
-            <button type="button" onclick="receiveMessage()">受信</button>
-        </form>
+        <!-- メッセージ送信フォーム -->
+        <div id="send-container"></div>
+    
+        <!-- メッセージ受信フォーム -->
+        <div id="receive-container"></div>
     </div>
+    
+    <!-- メッセージ履歴 -->
+    <div id="history-container"></div>
+    
+    
+    <!-- メッセージ履歴 -->
+    <div id="history-container"></div>
 
-    <div id="messages">
-        <!-- メッセージがここに追加される -->
-    </div>
-
+    <script src="js/send.js"></script>
+    <script src="js/receive.js"></script>
+    <script src="js/history.js"></script>
     <script>
-        function sendMessage(endpoint, inputId) {
-            const message = document.getElementById(inputId).value;
-
-            if (!message) {
-                alert("メッセージを入力してください");
-                return;
-            }
-
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({ msg: message })
-            })
-            .then(response => response.text())
-            .then(data => {
-                addMessageToHistory("送信: " + data);
-            })
-            .catch(error => {
-                addMessageToHistory("送信エラー: " + error.message);
-            });
-        }
-
-        function receiveMessage() {
-            fetch('/mqapp/api/recv')
-            .then(response => response.text())
-            .then(data => {
-                addMessageToHistory("受信: " + data);
-            })
-            .catch(error => {
-                addMessageToHistory("受信エラー: " + error.message);
-            });
-        }
-
-        function addMessageToHistory(message) {
-            const messagesDiv = document.getElementById('messages');
-            const newMessageDiv = document.createElement('div');
-            newMessageDiv.classList.add('message');
-            newMessageDiv.textContent = message;
-            messagesDiv.insertBefore(newMessageDiv, messagesDiv.firstChild); // 新しいメッセージを上に追加
-        }
+        // コンポーネントを動的に挿入
+        document.getElementById('send-container').innerHTML = sendFormHTML;
+        document.getElementById('receive-container').innerHTML = receiveFormHTML;
+        document.getElementById('history-container').innerHTML = historyHTML;
     </script>
 </body>
 </html>
