@@ -42,7 +42,7 @@ public class MQConsumer {
                 throw new Exception("受信したメッセージがテキスト形式ではありません");
             }
         } catch (Exception e) {
-            throw new Exception("メッセージの受信に失敗しました: " + e.getMessage(), e);
+            throw new Exception("メッセージの受信に失敗しました  " + e.getMessage(), e);
         }
     }
 }

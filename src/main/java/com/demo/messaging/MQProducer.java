@@ -25,7 +25,7 @@ public class MQProducer {
             context.createProducer().send(queue, message);
             return message + " enqueued.";
         } catch (Exception e) {
-            throw new Exception("ローカルキューへの送信に失敗しました: " + e.getMessage(), e);
+            throw new Exception("ローカルキューへの送信に失敗しました  " + e.getMessage(), e);
         }
     }
 
@@ -34,7 +34,7 @@ public class MQProducer {
             context.createProducer().send(remoteQueue, message);
             return message + " remote enqueued.";
         } catch (Exception e) {
-            throw new Exception("リモートキューへの送信に失敗しました: " + e.getMessage(), e);
+            throw new Exception("リモートキューへの送信に失敗しました  " + e.getMessage(), e);
         }
     }
 }
