@@ -10,6 +10,9 @@ import jakarta.jms.Destination;
 import jakarta.jms.Message;
 import jakarta.jms.TextMessage;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+
 @Stateless
 public class MQConsumer {
 
@@ -22,6 +25,7 @@ public class MQConsumer {
 
     // タイムアウト時間（ミリ秒単位）
     private static final long RECEIVE_TIMEOUT = 5000; // 例: 5秒
+
 
     public String recvMessage() throws Exception {
         try {
@@ -38,12 +42,24 @@ public class MQConsumer {
                 TextMessage textMessage = (TextMessage) message;
 
                 // JMS ヘッダー情報を取得
-                String messageId = textMessage.getJMSMessageID();
-                long timestamp = textMessage.getJMSTimestamp();
-                String correlationId = textMessage.getJMSCorrelationID();
-                return String.format("{\"message\": \"%s\", \"messageId\": \"%s\", \"timestamp\": %d, \"correlationId\": \"%s\"}",
-                                    textMessage.getText(), messageId, timestamp, correlationId);
-                                    
+                JsonObject headers = Json.createObjectBuilder()
+                        .add("JMSMessageID", textMessage.getJMSMessageID())
+                        .add("JMSTimestamp", textMessage.getJMSTimestamp())
+                        .add("JMSCorrelationID", textMessage.getJMSCorrelationID() != null ? textMessage.getJMSCorrelationID() : "")
+                        .add("JMSDestination", textMessage.getJMSDestination() != null ? textMessage.getJMSDestination().toString() : "")
+                        .add("JMSDeliveryMode", textMessage.getJMSDeliveryMode())
+                        .add("JMSExpiration", textMessage.getJMSExpiration())
+                        .add("JMSPriority", textMessage.getJMSPriority())
+                        .add("JMSReplyTo", textMessage.getJMSReplyTo() != null ? textMessage.getJMSReplyTo().toString() : "")
+                        .add("JMSType", textMessage.getJMSType() != null ? textMessage.getJMSType() : "")
+                        .build();
+
+                // メッセージとヘッダー情報をJSON形式で返す
+                return Json.createObjectBuilder()
+                        .add("message", textMessage.getText())
+                        .add("headers", headers)
+                        .build()
+                        .toString();
             } else {
                 throw new Exception("受信したメッセージがテキスト形式ではありません");
             }

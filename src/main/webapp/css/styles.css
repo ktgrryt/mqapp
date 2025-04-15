@@ -149,8 +149,6 @@ button:active {
     line-height: 1.4;
 }
 
-
-
 /* レスポンシブ対応 */
 @media (max-width: 860px) {
     #messages {

@@ -21,22 +21,12 @@ function receiveMessage() {
         if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
         }
-        return response.text();
+        return response.json();
     })
-    .then(data => {
-        // サーバーから返されたデータをパース（例: ヘッダー情報を含むJSON形式を仮定）
-        const parsedData = JSON.parse(data);
-    
-        // メッセージ履歴に追加（ヘッダー情報を渡す）
-        addMessageToHistory(`受信: ${parsedData.message}`, 'response', {
-            messageId: parsedData.messageId,
-            timestamp: parsedData.timestamp,
-            correlationId: parsedData.correlationId
-        });
+    .then(parsedData => {
+        addMessageToHistory(`受信: ${parsedData.message}`, 'response', parsedData.headers);
     })
-    
     .catch(error => {
-        // エラー表示を赤色に
         addMessageToHistory("受信エラー: " + error.message, 'error');
     });
     

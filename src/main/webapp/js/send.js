@@ -35,24 +35,14 @@ function sendMessage() {
         if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
         }
-        return response.text();
+        return response.json();
     })
-    .then(data => {
-        // サーバーから返されたデータをパース（例: ヘッダー情報を含むJSON形式を仮定）
-        const parsedData = JSON.parse(data);
-    
-        // メッセージ履歴に追加（ヘッダー情報を渡す）
-        addMessageToHistory(`送信: ${parsedData.message}`, 'response', {
-            messageId: parsedData.messageId,
-            timestamp: parsedData.timestamp,
-            correlationId: parsedData.correlationId
-        });
-    
-        // メッセージ入力フォームをクリア
-        messageInput.value = '';
+    .then(parsedData => {
+        addMessageToHistory(`送信: ${parsedData.message}`, 'response', parsedData.headers);
+        messageInput.value = ''; // フォームをクリア
     })
     .catch(error => {
-        // エラー表示を赤色に
         addMessageToHistory("送信エラー: " + error.message, 'error');
     });
+
 }    
