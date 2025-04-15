@@ -21,14 +21,13 @@ function receiveMessage() {
         if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
         }
-        return response.text();
+        return response.json();
     })
-    .then(data => {
-        // 受信結果を履歴に追加 (青色表示)
-        addMessageToHistory("受信: " + data, 'response');
+    .then(parsedData => {
+        addMessageToHistory(`受信: ${parsedData.message}`, 'response', parsedData.headers);
     })
     .catch(error => {
-        // エラー表示を赤色に
         addMessageToHistory("受信エラー: " + error.message, 'error');
     });
+    
 }

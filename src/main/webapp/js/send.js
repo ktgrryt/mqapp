@@ -35,16 +35,14 @@ function sendMessage() {
         if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
         }
-        return response.text();
+        return response.json();
     })
-    .then(data => {
-        // 送信結果を履歴に追加 (青色表示)
-        addMessageToHistory("送信: " + data, 'response');
-        // メッセージ入力フォームをクリア
-        messageInput.value = '';
+    .then(parsedData => {
+        addMessageToHistory(`送信: ${parsedData.message}`, 'response', parsedData.headers);
+        messageInput.value = ''; // フォームをクリア
     })
     .catch(error => {
-        // エラー表示を赤色に
         addMessageToHistory("送信エラー: " + error.message, 'error');
     });
-}
+
+}    

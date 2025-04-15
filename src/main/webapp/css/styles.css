@@ -138,6 +138,16 @@ button:active {
     border-bottom: 1px solid #ddd;
 }
 
+.message-headers {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
 
 /* レスポンシブ対応 */
 @media (max-width: 860px) {
