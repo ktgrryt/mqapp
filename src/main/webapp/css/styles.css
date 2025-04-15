@@ -32,7 +32,7 @@ form {
     border-radius: 10px; /* 角をより丸く */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex: 1 1 300px; /* レスポンシブ対応：最低幅300px */
-    max-width: 400px; /* フォームの最大幅を指定 */
+    width: 400px; /* フォームの最大幅を指定 */
     box-sizing: border-box;
 }
 
@@ -89,7 +89,7 @@ button:active {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px; /* メッセージコンテナの最大幅を指定 */
+    max-width: 820px; /* メッセージコンテナの最大幅を指定 */
     box-sizing: border-box;
 }
 
@@ -131,17 +131,30 @@ button:active {
     border-left: 4px solid #ff0000; /* 左に赤色のアクセントライン */
 }
 
+/* メッセージ履歴ヘッダーのスタイル */
+#messages-header {
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
 
-/* メディアクエリでレスポンシブ対応 */
-@media (max-width: 768px) {
-    .forms-container {
-        flex-direction: column; /* 小さい画面では縦並び */
-        gap: 15px;
-    }
-    form {
-        max-width: 100%; /* 横幅制限を解除 */
-    }
+.message-headers {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+
+
+/* レスポンシブ対応 */
+@media (max-width: 860px) {
     #messages {
-        width: 90%; /* メッセージコンテナの幅を調整 */
+        max-width: 400px; /* 横幅の最大値を400pxに制限 */
+        width: 100%; /* 幅を100%に設定 */
     }
 }

@@ -26,7 +26,14 @@ public class MQProducer {
             TextMessage textMessage = context.createTextMessage();
             textMessage.setText(message);
             context.createProducer().send(queue, textMessage);
-            return message + " enqueued.";
+
+            // JMS ヘッダー情報を取得
+            String messageId = textMessage.getJMSMessageID();
+            long timestamp = textMessage.getJMSTimestamp();
+            String correlationId = textMessage.getJMSCorrelationID();
+
+            return String.format("{\"message\": \"%s\", \"messageId\": \"%s\", \"timestamp\": %d, \"correlationId\": \"%s\"}",
+                                message, messageId, timestamp, correlationId);
         } catch (Exception e) {
             throw new Exception("ローカルキューへの送信に失敗しました  " + e.getMessage(), e);
         }
@@ -37,7 +44,15 @@ public class MQProducer {
             TextMessage textMessage = context.createTextMessage();
             textMessage.setText(message);
             context.createProducer().send(remoteQueue, textMessage);
-            return message + " remote enqueued.";
+
+            // JMS ヘッダー情報を取得
+            String messageId = textMessage.getJMSMessageID();
+            long timestamp = textMessage.getJMSTimestamp();
+            String correlationId = textMessage.getJMSCorrelationID();
+
+            return String.format("{\"message\": \"%s\", \"messageId\": \"%s\", \"timestamp\": %d, \"correlationId\": \"%s\"}",
+                                message, messageId, timestamp, correlationId);
+            
         } catch (Exception e) {
             throw new Exception("リモートキューへの送信に失敗しました  " + e.getMessage(), e);
         }

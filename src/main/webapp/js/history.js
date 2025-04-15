@@ -9,7 +9,8 @@ const historyHTML = `
     </div>
 `;
 
-function addMessageToHistory(message, type = 'default') {
+
+function addMessageToHistory(message, type = 'default', headers = null) {
     const messagesDiv = document.getElementById('messages-list');
     const newMessageDiv = document.createElement('div');
     newMessageDiv.classList.add('message');
@@ -37,9 +38,33 @@ function addMessageToHistory(message, type = 'default') {
     // フォーマット例: HH:mm:ss.SSS
     timestamp.textContent = `${hours}:${minutes}:${seconds}.${milliseconds}`;
     
-    // メッセージとタイムスタンプを追加
-    newMessageDiv.textContent = message;
-    newMessageDiv.appendChild(timestamp); // タイムスタンプをメッセージに追加
+    // メッセージテキストを追加
+    const messageText = document.createElement('span');
+    messageText.textContent = message;
+    newMessageDiv.appendChild(messageText);
+
+    // ヘッダー情報を追加（初期状態は非表示）
+    if (headers) {
+        const headerDiv = document.createElement('div');
+        headerDiv.classList.add('message-headers');
+        headerDiv.style.display = 'none'; // 初期状態で非表示に設定
+
+        // ヘッダー情報をフォーマットして追加
+        headerDiv.innerHTML = `
+            <p><strong>MessageID:</strong> ${headers.messageId}</p>
+            <p><strong>Timestamp:</strong> ${headers.timestamp}</p>
+            <p><strong>CorrelationID:</strong> ${headers.correlationId}</p>
+        `;
+        newMessageDiv.appendChild(headerDiv);
+
+        // メッセージをクリックするとヘッダー情報を表示/非表示に切り替える
+        newMessageDiv.addEventListener('click', () => {
+            headerDiv.style.display = headerDiv.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+    
+    // タイムスタンプを追加
+    newMessageDiv.appendChild(timestamp);
     
     messagesDiv.insertBefore(newMessageDiv, messagesDiv.firstChild); // 新しいメッセージを上に追加
 }

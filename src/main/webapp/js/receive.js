@@ -24,11 +24,20 @@ function receiveMessage() {
         return response.text();
     })
     .then(data => {
-        // 受信結果を履歴に追加 (青色表示)
-        addMessageToHistory("受信: " + data, 'response');
+        // サーバーから返されたデータをパース（例: ヘッダー情報を含むJSON形式を仮定）
+        const parsedData = JSON.parse(data);
+    
+        // メッセージ履歴に追加（ヘッダー情報を渡す）
+        addMessageToHistory(`受信: ${parsedData.message}`, 'response', {
+            messageId: parsedData.messageId,
+            timestamp: parsedData.timestamp,
+            correlationId: parsedData.correlationId
+        });
     })
+    
     .catch(error => {
         // エラー表示を赤色に
         addMessageToHistory("受信エラー: " + error.message, 'error');
     });
+    
 }

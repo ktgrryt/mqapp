@@ -31,13 +31,19 @@ public class MQConsumer {
             Message message = consumer.receive(RECEIVE_TIMEOUT);
 
             if (message == null) {
-                // タイムアウトの場合
                 throw new Exception("メッセージ受信タイムアウト");
             }
 
             if (message instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) message;
-                return textMessage.getText() + " dequeued.";
+
+                // JMS ヘッダー情報を取得
+                String messageId = textMessage.getJMSMessageID();
+                long timestamp = textMessage.getJMSTimestamp();
+                String correlationId = textMessage.getJMSCorrelationID();
+                return String.format("{\"message\": \"%s\", \"messageId\": \"%s\", \"timestamp\": %d, \"correlationId\": \"%s\"}",
+                                    textMessage.getText(), messageId, timestamp, correlationId);
+                                    
             } else {
                 throw new Exception("受信したメッセージがテキスト形式ではありません");
             }
@@ -45,5 +51,6 @@ public class MQConsumer {
             throw new Exception("メッセージの受信に失敗しました  " + e.getMessage(), e);
         }
     }
+
 }
 
