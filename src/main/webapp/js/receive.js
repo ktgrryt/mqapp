@@ -1,15 +1,3 @@
-const receiveFormHTML = `
-    <form id="recvForm">
-        <h2>メッセージ受信</h2>
-        <label for="queueSelectRecv">受信するキューを選択:</label>
-        <select id="queueSelectRecv" required>
-            <option value="/mqapp/api/recv">ローカルキュー（DEV.QUEUE.1）</option>
-        </select>
-        <button type="button" onclick="receiveMessage()">受信</button>
-    </form>
-`;
-
-
 function receiveMessage() {
     const queueEndpoint = document.getElementById('queueSelectRecv').value;
 
