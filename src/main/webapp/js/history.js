@@ -1,14 +1,3 @@
-const historyHTML = `
-    <div id="messages">
-        <div id="messages-header">
-            <h2>メッセージ送受信の履歴：</h2>
-        </div>
-        <div id="messages-list">
-            <!-- メッセージがここに追加される -->
-        </div>
-    </div>
-`;
-
 function addMessageToHistory(message, type = 'default', headers = null) {
     const messagesDiv = document.getElementById('messages-list');
     const newMessageDiv = document.createElement('div');

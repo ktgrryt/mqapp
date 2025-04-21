@@ -10,23 +10,47 @@
 
     <div class="forms-container">
         <!-- メッセージ送信フォーム -->
-        <div id="send-container"></div>
+        <div id="send-container">
+            <form id="sendForm">
+                <h2>メッセージ送信</h2>
+                <label for="queueSelectSend">送信先キューを選択:</label>
+                <select id="queueSelectSend" required>
+                    <option value="/mqapp/api/sendlocal">ローカルキュー（DEV.QUEUE.1）</option>
+                    <option value="/mqapp/api/sendremote">リモートキュー（REMOTE.Q.1）</option>
+                </select>
+                <label for="messageInput">メッセージ:</label>
+                <input type="text" id="messageInput" name="msg" required>
+                <button type="button" onclick="sendMessage()">送信</button>
+            </form>
+        </div>
     
         <!-- メッセージ受信フォーム -->
-        <div id="receive-container"></div>
+        <div id="receive-container">
+            <form id="recvForm">
+                <h2>メッセージ受信</h2>
+                <label for="queueSelectRecv">受信するキューを選択:</label>
+                <select id="queueSelectRecv" required>
+                    <option value="/mqapp/api/recv">ローカルキュー（DEV.QUEUE.1）</option>
+                </select>
+                <button type="button" onclick="receiveMessage()">受信</button>
+            </form>
+        </div>
     </div>
     
     <!-- メッセージ履歴 -->
-    <div id="history-container"></div>
+    <div id="history-container">
+        <div id="messages">
+            <div id="messages-header">
+                <h2>メッセージ送受信の履歴：</h2>
+            </div>
+            <div id="messages-list">
+                <!-- メッセージがここに追加される -->
+            </div>
+        </div>
+    </div>
 
     <script src="js/send.js"></script>
     <script src="js/receive.js"></script>
     <script src="js/history.js"></script>
-    <script>
-        // コンポーネントを動的に挿入
-        document.getElementById('send-container').innerHTML = sendFormHTML;
-        document.getElementById('receive-container').innerHTML = receiveFormHTML;
-        document.getElementById('history-container').innerHTML = historyHTML;
-    </script>
 </body>
 </html>
